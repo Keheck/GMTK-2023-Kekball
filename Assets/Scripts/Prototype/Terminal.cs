@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 public class Terminal : MonoBehaviour {
 
     TMP_InputField inputField;
+    string lastInput;
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
@@ -17,7 +18,8 @@ public class Terminal : MonoBehaviour {
     }
 
     public void TakeInput(string input) {
-        
+        lastInput = input;
+        Reselect();
     }
 
     // called when deselected by user, to force you back in
