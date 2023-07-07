@@ -10,7 +10,7 @@ public class GameState {
     private GameState() { }
 
     public static void DoThings() {
-        string command = console.text;
+        //string command = console.text;
 
         commands[command.Split(' ')[0]].Parse(command.Split(' '));
     }
