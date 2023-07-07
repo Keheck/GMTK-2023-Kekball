@@ -12,6 +12,6 @@ public class GameState {
     public static void DoThings() {
         //string command = console.text;
 
-        commands[command.Split(' ')[0]].Parse(command.Split(' '));
+        // commands[command.Split(' ')[0]].Parse(command.Split(' '));
     }
 }
