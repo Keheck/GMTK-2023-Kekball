@@ -1,17 +1,31 @@
 using System.Collections.Generic;
+using UnityEngine;
 
-public class GameState {
-    public static GameState STATE { get; } = new GameState();
+public class GameState : MonoBehaviour {
 
-    public List<Player> Players { get; set; } = new List<Player>();
-    public List<Task> tasks { get; set; } = new List<Task>();
-    public Dictionary<string, Command> commands { get; set; } = new Dictionary<string, Command>();
+    public static GameState STATE { get; private set; } // singleton instance?
 
-    private GameState() { }
+    public static List<Player> players;
+    public static List<Task> tasks;
+    public static Dictionary<string, ICommand> commands;
 
-    public static void DoThings() {
-        //string command = console.text;
+    private void Awake() {
+        if (STATE is null) STATE = this;
+        else Destroy(this);
+        DontDestroyOnLoad(this);
 
-        // commands[command.Split(' ')[0]].Parse(command.Split(' '));
+        players = new List<Player>();
+        tasks = new List<Task>();
+        commands = new Dictionary<string, ICommand>();
+        commands.Add("help", new HelpCommand());
+    }
+
+    // takes commands from the player, parses them, and executes them, returning any relevant results
+    public static string SendCommand(string command) {
+        string[] args = command.Trim('\n').Split(' ');
+        if (args.Length == 0) return "";
+        if (!commands.ContainsKey(args[0])) return $"Unrecognized command: '{args[0]}' Type 'help' for a list of commands.";
+        // return the value that is returned by the command, and pass in any arguments
+        return commands[args[0]].Run(args);
     }
 }
