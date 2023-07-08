@@ -31,7 +31,7 @@ public class GameState : MonoBehaviour {
         commands.Add("connect", new ConnectCommand()); // for when a new client requests connection
         commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
         commands.Add("damage", new DamageCommand());
-        //commands.Add("setscore", new SetScoreCommand());
+        commands.Add("setscore", new SetScoreCommand());
         commands.Add("disconnect", new DisconnectCommand());
         commands.Add("respawn", new RespawnCommand());
     }
@@ -41,7 +41,9 @@ public class GameState : MonoBehaviour {
     }
 
     private void Update() {
-        foreach (Task task in tasks) {
+
+        for (int i = tasks.Count-1; i >= 0; i--) {
+            Task task = tasks[i];
             task.timeSinceSent += Time.deltaTime;
             if (task.timeSinceSent >= task.timeLimit) {
                 task.expired = true;
@@ -91,17 +93,7 @@ public class GameState : MonoBehaviour {
                 timedOutPlayer.timedOut = true;
                 tasks.Add(new TimeoutPlayerTask(timedOutPlayer));
                 break;
-            case 3:
-                if(players.Count < 2) goto newTask;
-                // get a new player
-                Player player = players[(int)Random.Range(0, players.Count - 1)];
-                // abort if we already have a task for this player
-                foreach (Task task in tasks) {
-                    if (task.targetPlayer == player) goto newTask;
-                }
-                tasks.Add(new DamagePlayerTask((int)Random.Range(15,25), Random.Range(30,35), player, (int)Random.Range(1,110)));
-                break;
-            case 9999: // never called
+            case 2: // never called
                 if (players.Count < 2) goto newTask;
                 // get a new player
                 Player player2 = players[(int)Random.Range(0, players.Count - 1)];
@@ -111,6 +103,16 @@ public class GameState : MonoBehaviour {
                 }
                 // note: probability of getting here is lower than other tasks, since we need two people
                 tasks.Add(new SetScoreTask((int) Random.Range(15, 25), Random.Range(30,40), player2, player2.score + (int)Random.Range(1, 3)));
+                break;
+            case 3:
+                if(players.Count < 2) goto newTask;
+                // get a new player
+                Player player = players[(int)Random.Range(0, players.Count - 1)];
+                // abort if we already have a task for this player
+                foreach (Task task in tasks) {
+                    if (task.targetPlayer == player) goto newTask;
+                }
+                tasks.Add(new DamagePlayerTask((int)Random.Range(15,25), Random.Range(30,35), player, (int)Random.Range(1,110)));
                 break;
             default:
                 goto newTask;
