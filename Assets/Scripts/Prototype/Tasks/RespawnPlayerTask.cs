@@ -1,19 +1,18 @@
 class RespawnPlayerTask : Task {
-    public Player player;
 
     public RespawnPlayerTask(int timeSinceSent, int timeLimit, Player player) : base(timeSinceSent, timeLimit) {
-        this.player = player;
+        this.targetPlayer = player;
     }
 
     public override string GetDescription() {
-        return $"Respawn {player.name}";
+        return $"Respawn {targetPlayer.name}";
     }
 
     public override bool IsSatisfied() {
-        return player.isAlive;
+        return targetPlayer.isAlive;
     }
 
     public override bool IsViolated() {
-        return false;
+        return !GameState.players.Contains(targetPlayer);
     }
 }

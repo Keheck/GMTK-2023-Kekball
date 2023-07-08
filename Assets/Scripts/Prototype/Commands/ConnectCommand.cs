@@ -1,7 +1,9 @@
 public class ConnectCommand : ICommand{
     public string Run(string[] args) {
         if (args.Length == 1) return "Specify a player.";
-        Player plr = GameState.GetConnectingPlayer(args[1]);
+        Player plr = GameState.GetConnectedPlayer(args[1]);
+        if (plr is not null) return $"{plr.name} is already connected.";
+        plr = GameState.GetConnectingPlayer(args[1]);
         if (plr is null) return $"Player '{args[1]}' not found.";
         GameState.players.Add(plr);
         GameState.connectingPlayers.Remove(plr);

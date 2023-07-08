@@ -1,6 +1,7 @@
 public abstract class Task {
     public int TimeSinceSent = 0;
     public int TimeLimit = 0;
+    public Player targetPlayer = null;
 
     public Task(int timeSinceSent, int timeLimit) {
         TimeSinceSent = timeSinceSent;

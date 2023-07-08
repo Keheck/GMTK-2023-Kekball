@@ -1,27 +1,26 @@
 using UnityEngine;
 
-public class DamagePlayerTask: Task {
-    public int previousHealth;
+public class DamagePlayerTask : Task {
     public int amount;
-    public Player destinationPlayer;
+    
+    private bool completed = false;
 
-    public DamagePlayerTask(int timeSinceSent, int timeLimit, Player destination, int damage) : base(timeSinceSent, timeLimit) {
-        this.previousHealth = destination.health;
+    public DamagePlayerTask(int timeSinceSent, int timeLimit, Player targetPlayer, int damage) : base(timeSinceSent, timeLimit) {
         this.amount = damage;
-        this.destinationPlayer = destination;
+        this.targetPlayer = targetPlayer;
+        // when the player takes damage, check if it was the right amount and complete the task
+        targetPlayer.OnDamaged += (damageAmount) => completed = damageAmount == amount;
     }
 
     public override string GetDescription() {
-        return $"Apply {amount} damage to {destinationPlayer.name}.";
+        return $"Apply {amount} damage to {targetPlayer.name}.";
     }
 
     public override bool IsSatisfied() {
-        bool result = destinationPlayer.health == (int)Mathf.Max(0, previousHealth - amount);
-
-        return result;
+        return completed;
     }
 
     public override bool IsViolated() {
-        return false;//destinationPlayer.health != previousHealth && destinationPlayer.health != (int)Mathf.Max(0, amount - previousHealth);
+        return !GameState.players.Contains(targetPlayer);
     }
 }

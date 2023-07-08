@@ -8,6 +8,8 @@ public class Player {
     public bool timedOut = false;
     public bool isAlive = true;
 
+    public event System.Action<int> OnDamaged;
+
     public Player(int id, string name, int ping) {
         this.id = id;
         this.name = name;
@@ -43,6 +45,7 @@ public class Player {
         "jamesmay",
         "fitmc",
         "markmusk",
+        "wirtual",
         "popbob"
     };
 
@@ -50,6 +53,7 @@ public class Player {
     public int health {
         get { return Health; }
         set {
+            OnDamaged?.Invoke(this.Health - value);
             this.Health = value;
             if(Health <= 0) {
                 isAlive = false;

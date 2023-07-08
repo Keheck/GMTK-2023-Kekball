@@ -1,17 +1,15 @@
-public class TimeoutPlayerTask : Task
-{
-    public Player player;
+public class TimeoutPlayerTask : Task {
 
     public TimeoutPlayerTask(Player player): base(0, 100) {
-        this.player = player;
+        this.targetPlayer = player;
     }
 
     public override string GetDescription() {
-        return $"{player.name} timed out. Disconnect {player.name}.";
+        return $"Disconnect {targetPlayer.name}: timed out.";
     }
 
     public override bool IsSatisfied() {
-        return !GameState.players.Contains(player);
+        return !GameState.players.Contains(targetPlayer);
     }
 
     public override bool IsViolated() {
