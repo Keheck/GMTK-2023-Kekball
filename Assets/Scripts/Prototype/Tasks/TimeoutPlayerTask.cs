@@ -6,13 +6,11 @@ public class TimeoutPlayerTask : Task
         this.player = player;
     }
 
-    public override string GetDescription()
-    {
+    public override string GetDescription() {
         return $"{player.name} timed out";
     }
 
-    public override bool IsSatisfied()
-    {
+    public override bool IsSatisfied() {
         return !GameState.players.Contains(player);
     }
 

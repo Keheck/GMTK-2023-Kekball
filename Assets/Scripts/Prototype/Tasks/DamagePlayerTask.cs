@@ -6,8 +6,7 @@ public class DamagePlayerTask: Task {
     public Player destinationPlayer;
     public Player sourcePlayer;
 
-    public DamagePlayerTask(int timeSinceSent, int timeLimit, Player source, Player destination, int damage) : base(timeSinceSent, timeLimit)
-    {
+    public DamagePlayerTask(int timeSinceSent, int timeLimit, Player source, Player destination, int damage) : base(timeSinceSent, timeLimit) {
         this.previousHealth = destination.health;
         this.amount = damage;
 
@@ -23,8 +22,7 @@ public class DamagePlayerTask: Task {
         return destinationPlayer.health == (int)Mathf.Max(0, previousHealth - amount);
     }
 
-    public override bool IsViolated()
-    {
+    public override bool IsViolated() {
         return destinationPlayer.health != previousHealth && destinationPlayer.health != (int)Mathf.Max(0, amount - previousHealth);
     }
 }

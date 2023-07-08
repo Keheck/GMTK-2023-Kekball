@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.Linq;
 
 public class GameState : MonoBehaviour {
 
@@ -24,15 +25,8 @@ public class GameState : MonoBehaviour {
         commands.Add("cls", new ClearCommand());
         commands.Add("connect", new ConnectCommand()); // for when a new client requests connection
         commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
-
-        // example player, starts unconnected
-        Player doe = new Player(2763, "exampleguy", 60000);
-        doe.health = 50000;
-        doe.score += int.MaxValue;
-        connectingPlayers.Add(doe);
-
-        tasks.Add(new ConnectPlayerTask(0, 50, doe));
-        //GenerateNewTask();
+        
+        GenerateNewTask();
     }
 
     public static async void GenerateNewTask() {
@@ -49,7 +43,22 @@ public class GameState : MonoBehaviour {
                     if(connectingPlayers.Count == 0) goto newTask; 
                     int index = Mathf.FloorToInt(Random.value * Player.PLAYER_NAMES.Count);
                     Player requester = new Player(9, Player.PLAYER_NAMES[index], 50);
+                    tasks.Add(new ConnectPlayerTask((int)(Random.value * 30), 100, requester));
                     break;
+                case 1:
+                    if(players.Count == 0) goto newTask;
+                    index = Mathf.FloorToInt(Random.value * Player.PLAYER_NAMES.Count);
+                    Player timedout = players[Mathf.FloorToInt(Random.value * players.Count)];
+                    break;
+                case 3:
+                    if(players.Count < 2) goto newTask;
+                    int index1 = Mathf.FloorToInt(Random.value * players.Count);
+                    int index2 = Mathf.FloorToInt(Random.value * players.Count);
+                    while(index1 == index2) index2 = Mathf.FloorToInt(Random.value * players.Count);
+                    tasks.Add(new DamagePlayerTask((int)(Random.value * 20), 70, players[index1], players[index2], Mathf.FloorToInt(Random.value * 20)));
+                    break;
+                default:
+                    goto newTask;
             }
     
             // Recursively call with a 1-4 second delay to generate new tasks
