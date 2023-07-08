@@ -47,6 +47,13 @@ public class GameState : MonoBehaviour {
             switch (taskType) {
                 case 0:
                     int index = Mathf.FloorToInt(Random.value * Player.PLAYER_NAMES.Count);
+                    string name = Player.PLAYER_NAMES[index];
+                    foreach (Player plr in players) {
+                        if (plr.name == name) goto newTask;
+                    }
+                    foreach (Player plr in connectingPlayers) {
+                        if (plr.name == name) goto newTask;
+                    }
                     Player requester = new Player(0, Player.PLAYER_NAMES[index], 50);
                     tasks.Add(new ConnectPlayerTask((int)(Random.value * 30), 100, requester));
                     connectingPlayers.Add(requester);
@@ -55,13 +62,20 @@ public class GameState : MonoBehaviour {
                     if(players.Count == 0) goto newTask;
                     index = Mathf.FloorToInt(Random.value * Player.PLAYER_NAMES.Count);
                     Player timedout = players[Mathf.FloorToInt(Random.value * players.Count)];
+                    if (timedout.timedOut) goto newTask;
+                    timedout.timedOut = true;
+                    tasks.Add(new TimeoutPlayerTask(timedout));
                     break;
                 case 3:
                     if(players.Count < 2) goto newTask;
                     int index1 = Mathf.FloorToInt(Random.value * players.Count);
-                    int index2 = Mathf.FloorToInt(Random.value * players.Count);
-                    while(index1 == index2) index2 = Mathf.FloorToInt(Random.value * players.Count);
-                    tasks.Add(new DamagePlayerTask((int)(Random.value * 20), 70, players[index1], players[index2], Mathf.FloorToInt(Random.value * 20)));
+                    foreach (Task task in tasks) {
+                        if (task is DamagePlayerTask) {
+                            DamagePlayerTask damageTask = (DamagePlayerTask)task;
+                            if (damageTask.destinationPlayer == players[index1]) goto newTask;
+                        }
+                    }
+                    tasks.Add(new DamagePlayerTask((int)(Random.value * 20) + 1, 70, players[index1], Mathf.FloorToInt(Random.value * 20)));
                     break;
                 default:
                     goto newTask;
