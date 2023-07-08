@@ -28,7 +28,7 @@ public class GameState : MonoBehaviour {
         commands.Add("connect", new ConnectCommand()); // for when a new client requests connection
         commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
         commands.Add("damage", new DamageCommand());
-        commands.Add("setscore", new SetScoreCommand());
+        //commands.Add("setscore", new SetScoreCommand());
         commands.Add("disconnect", new DisconnectCommand());
         commands.Add("respawn", new RespawnCommand());
     }
@@ -87,7 +87,7 @@ public class GameState : MonoBehaviour {
                     }
                     tasks.Add(new DamagePlayerTask((int)Random.Range(0,20), 70, player, (int)Random.Range(1,110)));
                     break;
-                case 4:
+                case 9999: // never called
                     if (players.Count < 2) continue;
                     // get a new player
                     Player player2 = players[(int)Random.Range(0, players.Count - 1)];
@@ -153,5 +153,9 @@ public class GameState : MonoBehaviour {
 
     public static void ErrorSound() {
         AudioManager.PlaySound(STATE.unknownCommand);
+    }
+
+    public static List<Task> GetTasks() {
+        return tasks;
     }
 }

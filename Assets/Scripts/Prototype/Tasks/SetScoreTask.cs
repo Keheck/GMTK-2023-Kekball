@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SetScoreTask : Task {
     public int amount;
-    private bool completed = false;
+    public bool completed = false;
 
     public SetScoreTask(int timeSinceSent, int timeLimit, Player targetPlayer, int targetScore) : base(timeSinceSent, timeLimit) {
         this.amount = targetScore;
