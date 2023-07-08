@@ -5,12 +5,15 @@ using System.Linq;
 
 public class GameState : MonoBehaviour {
 
+
     public static GameState STATE { get; private set; } // singleton instance?
 
     public static List<Player> players;
     public static List<Player> connectingPlayers;
     public static List<Task> tasks;
     public static Dictionary<string, ICommand> commands;
+
+    public AudioClip newTask, failTask, winTask;
 
     private void Awake() {
         if (STATE is null) STATE = this;
@@ -63,10 +66,11 @@ public class GameState : MonoBehaviour {
                 default:
                     goto newTask;
             }
-
             lastGenerated = Time.time;
             nextDelay = (int)(Random.value * 3000 + 1000);
             await UniTask.Delay(nextDelay);
+            // task was created
+            AudioManager.PlaySound(STATE.newTask);
         }
     }
 
@@ -79,8 +83,14 @@ public class GameState : MonoBehaviour {
         string result = commands[args[0]].Run(args);
 
         for(int i = tasks.Count - 1; i >= 0; i--) {
-            if(tasks[i].IsViolated()) return "YOU FAILED!";
-            if(tasks[i].IsSatisfied()) tasks.RemoveAt(i);
+            if(tasks[i].IsViolated()) {
+                AudioManager.PlaySound(STATE.failTask);
+                return "YOU FAILED!";
+            }
+            if(tasks[i].IsSatisfied()) {
+                AudioManager.PlaySound(STATE.winTask);
+                tasks.RemoveAt(i);
+            }
         }
 
         return result;
