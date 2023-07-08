@@ -3,7 +3,7 @@
 ## Features plan
 
 - ~~Take input from player typing~~
-- Tasks spawn on your screen telling you what to do but now how to do it
+- ~~Tasks spawn on your screen telling you what to do but now how to do it~~
 - Player is gradually introduced to more mechanics
 - make a system for making "levels", maybe switch between scenes?
 - When a task expires it increases your lag (bad score)
@@ -17,8 +17,8 @@
 - scoreboard: harder requests handled faster = more points. Expired requests or incorrectly fulfilled = points deducted + player loss, lose at 0 players online
 - score could also be average ms per request (lower = better? yes :thumbs_up: :ballers:)
 - add joke tasks, like `brew coffee` and `fold towels` and `file taxes` where you just type the name of the task to complete it
-- we need a monospace font
-- we need some sounds little beepboops on text edited and tasks added/completed/failed
+- ~~we need a monospace font~~
+- ~~we need some sounds little beepboops on text edited and tasks added/completed/failed~~
 - screen shake effect? do the screen
 
 ## Commands for the player
