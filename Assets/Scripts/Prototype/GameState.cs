@@ -13,6 +13,7 @@ public class GameState : MonoBehaviour {
 
     public AudioClip newTask, failTask, winTask, unknownCommand;
     static int playerId = 0;
+    static int taskFrequency = 900;
 
     private void Awake() {
         if (STATE is null) STATE = this;
@@ -102,7 +103,7 @@ public class GameState : MonoBehaviour {
         }
         AudioManager.PlaySound(STATE.newTask);
         await UniTask.WaitUntil(() => tasks.Count < 7);
-        await UniTask.Delay((int)Random.Range(0, 1200) + 400 + tasks.Count * 700);
+        await UniTask.Delay((int)Random.Range(0, 1200) + 400 + tasks.Count * taskFrequency);
         goto newTask;
     }
 
@@ -122,10 +123,12 @@ public class GameState : MonoBehaviour {
                 AudioManager.PlaySound(STATE.failTask);
                 result += "\nTask Failed Successfully.";
                 tasks.RemoveAt(i);
+                taskFrequency -= 30;
             }
             else if (tasks[i].IsSatisfied()) {
                 AudioManager.PlaySound(STATE.winTask);
                 tasks.RemoveAt(i);
+                taskFrequency -= 30;
             }
         }
 
