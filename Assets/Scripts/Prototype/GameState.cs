@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using System.Linq;
 
 public class GameState : MonoBehaviour {
 
@@ -30,7 +29,9 @@ public class GameState : MonoBehaviour {
         commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
         commands.Add("damage", new DamageCommand());
         commands.Add("setscore", new SetScoreCommand());
+    }
 
+    void Start() {
         GenerateTasks();
     }
 
@@ -67,7 +68,7 @@ public class GameState : MonoBehaviour {
             }
 
             AudioManager.PlaySound(STATE.newTask);
-            await UniTask.WaitUntil(() => tasks.Count > 7);
+            await UniTask.WaitUntil(() => tasks.Count < 7);
             await UniTask.Delay((int)(Random.value * 3000 + 1000));
         }
     }
