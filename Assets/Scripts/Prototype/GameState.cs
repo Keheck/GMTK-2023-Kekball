@@ -28,12 +28,10 @@ public class GameState : MonoBehaviour {
         commands.Add("cls", new ClearCommand());
         commands.Add("connect", new ConnectCommand()); // for when a new client requests connection
         commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
+        commands.Add("modify", new ModifyCommand());
 
         GenerateTasks();
     }
-
-    float lastGenerated;
-    int nextDelay;
 
     async void GenerateTasks() {
         while(true) {
@@ -66,11 +64,10 @@ public class GameState : MonoBehaviour {
                 default:
                     goto newTask;
             }
-            lastGenerated = Time.time;
-            nextDelay = (int)(Random.value * 3000 + 1000);
-            await UniTask.Delay(nextDelay);
-            // task was created
+
             AudioManager.PlaySound(STATE.newTask);
+            await UniTask.WaitUntil(() => tasks.Count > 7);
+            await UniTask.Delay((int)(Random.value * 3000 + 1000));
         }
     }
 
