@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -12,19 +13,34 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
     public AudioClip hover;
     public AudioClip click;
 
+    private string text;
+
     public void OnPointerEnter(PointerEventData eventData) {
         this.tmpTextField.text = "> " + this.tmpTextField.text;
         AudioManager.PlaySound(this.hover);
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        string text = this.tmpTextField.text;
-        if(text.StartsWith("> "))
-            this.tmpTextField.text = text.Substring(2);
+        this.tmpTextField.text = text;
+    }
+
+    void OnEnable() {
+        this.tmpTextField.text = this.text;
     }
 
     // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         tmpTextField = GetComponentInChildren<TMP_Text>();
+        this.text = this.tmpTextField.text;
+    }
+
+    public void SwitchNavigation(MenuSection menu) {
+        // This is so fucking stupid
+        menu.gameObject.SetActive(true);
+        GetComponentInParent<MenuSection>().gameObject.SetActive(false);
+    }
+
+    public void CloseGame() {
+        Application.Quit();
     }
 }
