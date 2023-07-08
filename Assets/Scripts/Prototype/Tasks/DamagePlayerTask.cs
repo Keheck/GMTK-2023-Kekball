@@ -19,10 +19,16 @@ public class DamagePlayerTask: Task {
     }
 
     public override bool IsSatisfied() {
-        return destinationPlayer.health == (int)Mathf.Max(0, previousHealth - amount);
+        bool result = destinationPlayer.health == (int)Mathf.Max(0, previousHealth - amount);
+
+        if(result && previousHealth - amount <= 0) {
+            GameState.tasks.Add(new RespawnPlayerTask(0, 60, destinationPlayer));
+        }
+
+        return result;
     }
 
     public override bool IsViolated() {
-        return destinationPlayer.health != previousHealth && destinationPlayer.health != (int)Mathf.Max(0, amount - previousHealth);
+        return false;
     }
 }
