@@ -17,12 +17,23 @@ public class Player {
 
 
     public static readonly List<string> PLAYER_NAMES = new List<string>() {
-        "Keheck",
-        "Doeball",
-        "Zachary",
-        "JoeMama",
-        "Bingus_Gaming",
-        "GMTK_Mark",
-        "THE_Player"
+        "keheck",
+        "doeball",
+        "zachary",
+        "joemama",
+        "bingus_gaming",
+        "gmtk_mark",
+        "the_player",
+        "alina",
+        "matt",
+        "gaben",
+        "chillen",
+        "lucas",
+        "blougi",
+        "nimkers",
+        "toinoing",
+        "fitmc",
+        "markmusk",
+        "popbob"
     };
 }
