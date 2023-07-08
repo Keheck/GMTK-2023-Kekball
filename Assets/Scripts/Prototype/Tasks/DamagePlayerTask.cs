@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class DamagePlayerTask : Task {
     public int amount;
-    
     private bool completed = false;
 
     public DamagePlayerTask(int timeSinceSent, int timeLimit, Player targetPlayer, int damage) : base(timeSinceSent, timeLimit) {

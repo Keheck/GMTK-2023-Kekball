@@ -936,6 +936,7 @@ MonoBehaviour:
   newTask: {fileID: 8300000, guid: 5d3158ba1fa1ac64894512c26bea7c39, type: 3}
   failTask: {fileID: 8300000, guid: 58c492167c00dd741a023c5938c6a08d, type: 3}
   winTask: {fileID: 8300000, guid: 037535db813295844886e8f2632f4cd7, type: 3}
+  unknownCommand: {fileID: 8300000, guid: 301e0cb2dba36df4c8c38e32d088a54d, type: 3}
 --- !u!1 &1876026967
 GameObject:
   m_ObjectHideFlags: 0
