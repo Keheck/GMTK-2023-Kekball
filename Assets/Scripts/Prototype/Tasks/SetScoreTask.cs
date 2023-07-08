@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class SetScoreTask : Task {
     public int amount;
-    public bool completed = false;
 
     public SetScoreTask(int timeSinceSent, int timeLimit, Player targetPlayer, int targetScore) : base(timeSinceSent, timeLimit) {
         this.amount = targetScore;
         this.targetPlayer = targetPlayer;
         // when the player gains points, check if the score is now correct
-        targetPlayer.OnScoreChanged += (pointsAwarded) => completed = targetPlayer.score == amount;
+        //targetPlayer.OnScoreChanged += (pointsAwarded) => completed = targetPlayer.score == amount;
     }
 
     public override string GetDescription() {
@@ -16,7 +15,7 @@ public class SetScoreTask : Task {
     }
 
     public override bool IsSatisfied() {
-        return completed;
+        return targetPlayer.score == amount;
     }
 
     public override bool IsViolated() {
