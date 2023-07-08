@@ -25,25 +25,28 @@ public class GameState : MonoBehaviour {
         commands.Add("cls", new ClearCommand());
         commands.Add("connect", new ConnectCommand()); // for when a new client requests connection
         commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
-        
-        GenerateNewTask();
+
+        GenerateTasks();
     }
 
-    public static async void GenerateNewTask() {
-        while (true) {
+    float lastGenerated;
+    int nextDelay;
+
+    async void GenerateTasks() {
+        while(true) {
             // 0: Connect placer
             // 1: Disconect player (Destroy them)
             // 2: Move player
             // 3: Damage player
             // 4: Player killed -> change score
             newTask: int taskType = Mathf.FloorToInt(Random.value * 5);
-    
+        
             switch (taskType) {
                 case 0:
-                    if(connectingPlayers.Count == 0) goto newTask; 
                     int index = Mathf.FloorToInt(Random.value * Player.PLAYER_NAMES.Count);
-                    Player requester = new Player(9, Player.PLAYER_NAMES[index], 50);
+                    Player requester = new Player(0, Player.PLAYER_NAMES[index], 50);
                     tasks.Add(new ConnectPlayerTask((int)(Random.value * 30), 100, requester));
+                    connectingPlayers.Add(requester);
                     break;
                 case 1:
                     if(players.Count == 0) goto newTask;
@@ -60,9 +63,10 @@ public class GameState : MonoBehaviour {
                 default:
                     goto newTask;
             }
-    
-            // Recursively call with a 1-4 second delay to generate new tasks
-            await UniTask.Delay(Mathf.FloorToInt(Random.value * 3000 + 1000));
+
+            lastGenerated = Time.time;
+            nextDelay = (int)(Random.value * 3000 + 1000);
+            await UniTask.Delay(nextDelay);
         }
     }
 
