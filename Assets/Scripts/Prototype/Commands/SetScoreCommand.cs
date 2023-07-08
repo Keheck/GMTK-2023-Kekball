@@ -22,7 +22,7 @@ public class SetScoreCommand : ICommand {
         }
         if (int.TryParse(args[2], out int amount)) {
             plr.score = amount;
-            return $"{plr.name} now has {amount} points";
+            return $"{plr.name} now has a score of {amount}.";
         }
         GameState.ErrorSound();
         return $"Invalid amount: '{args[2]}'";

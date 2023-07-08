@@ -1,14 +1,15 @@
+using UnityEngine;
 using System.Collections.Generic;
 
 public class Player {
     public int id;
     public string name;
     public int ping;
-    public int score;
     public bool timedOut = false;
     public bool isAlive = true;
 
     public event System.Action<int> OnDamaged;
+    public event System.Action<int> OnScoreChanged;
 
     public Player(int id, string name, int ping) {
         this.id = id;
@@ -66,6 +67,15 @@ public class Player {
                 isAlive = false;
                 GameState.tasks.Add(new RespawnPlayerTask(0, 60, this));
             }
+        }
+    }
+    
+    private int Score; //lol
+    public int score {
+        get { return Score; }
+        set {
+            OnScoreChanged?.Invoke(value - this.Score);
+            this.Score = value;
         }
     }
 }

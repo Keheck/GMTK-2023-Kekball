@@ -43,7 +43,7 @@ public class GameState : MonoBehaviour {
         // 2: TODO Move player
         // 3: Damage player
         // 4: TODO Player killed -> TODO which then creates change score task
-        newTask: int taskType = (int)Random.Range(0, 4);
+        newTask: int taskType = (int)Random.Range(0, 5);
         switch (taskType) {
             case 0:
                 // dont connect too many players
@@ -85,8 +85,18 @@ public class GameState : MonoBehaviour {
                 foreach (Task task in tasks) {
                     if (task.targetPlayer == player) goto newTask;
                 }
-                //TODO: fix random amount of damage, can be zero and not usually 100
                 tasks.Add(new DamagePlayerTask((int)Random.Range(0,20), 70, player, (int)Random.Range(1,110)));
+                break;
+            case 4:
+                if (players.Count < 2) goto newTask;
+                // get a new player
+                Player player2 = players[(int)Random.Range(0, players.Count - 1)];
+                // abort if we already have a task for this player
+                foreach (Task task in tasks) {
+                    if (task.targetPlayer == player2) goto newTask;
+                }
+                // note: probability of getting here is lower than other tasks, since we need two people
+                tasks.Add(new SetScoreTask((int) Random.Range(0, 20), 90, player2, player2.score + (int)Random.Range(1, 3)));
                 break;
             default:
                 goto newTask;
@@ -109,11 +119,10 @@ public class GameState : MonoBehaviour {
         // return the value that is returned by the command, and pass in any arguments
         string result = commands[args[0]].Run(args);
 
-        // check each task for completion
         for (int i = tasks.Count - 1; i >= 0; i--) {
             if (tasks[i].IsViolated()) {
                 AudioManager.PlaySound(STATE.failTask);
-                result += "\nYOU FAILED!";
+                result += "\nTask Failed Successfully.";
                 tasks.RemoveAt(i);
             }
             else if (tasks[i].IsSatisfied()) {
