@@ -76,14 +76,6 @@ public class Player {
         set {
             OnScoreChanged?.Invoke(value - this.Score);
             this.Score = value;
-            foreach (Task task in GameState.GetTasks()) {
-                if (task is SetScoreTask) {
-                    SetScoreTask scoreTask = (SetScoreTask)task;
-                    if (SetScoreTask.targetPlayer == this){
-                        scoreTask.completed = value == scoreTask.amount;
-                    }
-                }
-            }
         }
     }
 }
