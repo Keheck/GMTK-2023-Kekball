@@ -13,8 +13,16 @@ public class Terminal : MonoBehaviour {
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
         inputField = GetComponent<TMP_InputField>();
-        lastInputPostition = inputField.text.Length;
+        Clear();
         Reselect();
+    }
+
+    private void Update() {
+        // dont go past the beginning of your input area, and dont backspace out of it
+        if (inputField.caretPosition < lastInputPostition) {
+            if (Input.GetKey(KeyCode.Backspace)) inputField.text += ">";
+            inputField.caretPosition = lastInputPostition;
+        }
     }
 
     public void TakeInput(string input) {
@@ -36,6 +44,13 @@ public class Terminal : MonoBehaviour {
         await UniTask.Yield();
         inputField.Select();
         inputField.ActivateInputField();
-        inputField.MoveTextEnd(false);
+        inputField.caretPosition = inputField.text.Length - 1;
+    }
+
+    // usually called by 'cls' command
+    public void Clear() {
+        inputField.text = ">";
+        inputField.caretPosition = 1;
+        lastInputPostition = inputField.text.Length;
     }
 }
