@@ -28,7 +28,8 @@ public class GameState : MonoBehaviour {
         commands.Add("cls", new ClearCommand());
         commands.Add("connect", new ConnectCommand()); // for when a new client requests connection
         commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
-        commands.Add("modify", new ModifyCommand());
+        commands.Add("damage", new DamageCommand());
+        commands.Add("setscore", new SetScoreCommand());
 
         GenerateTasks();
     }
