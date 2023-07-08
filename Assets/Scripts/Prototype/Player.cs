@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class Player {
     public int id;
     public string name;
@@ -13,4 +15,14 @@ public class Player {
         this.score = 0;
     }
 
+
+    public static readonly List<string> PLAYER_NAMES = new List<string>() {
+        "Keheck",
+        "Doeball",
+        "Zachary",
+        "JoeMama",
+        "Bingus_Gaming",
+        "GMTK_Mark",
+        "THE_Player"
+    };
 }

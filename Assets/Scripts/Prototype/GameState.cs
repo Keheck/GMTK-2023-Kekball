@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class GameState : MonoBehaviour {
 
@@ -29,6 +30,30 @@ public class GameState : MonoBehaviour {
         doe.health = 50000;
         doe.score += int.MaxValue;
         connectingPlayers.Add(doe);
+
+        tasks.Add(new ConnectPlayerTask(0, 50, doe));
+        //GenerateNewTask();
+    }
+
+    public static async void GenerateNewTask() {
+        // 0: Connect placer
+        // 1: Disconect player (Destroy them)
+        // 2: Move player
+        // 3: Damage player
+        // 4: Player killed -> change score
+        int taskType = Mathf.FloorToInt(Random.value * 5);
+
+        switch (taskType) {
+            case 0:
+                if(connectingPlayers.Count == 0) { GenerateNewTask(); return; }
+                int index = Mathf.FloorToInt(Random.value * Player.PLAYER_NAMES.Count);
+                Player requester = new Player(9, Player.PLAYER_NAMES[index], 50);
+                break;
+        }
+
+        // Recursively call with a 1-4 second delay to generate new tasks
+        await UniTask.Delay(Mathf.FloorToInt(Random.value * 3000 + 1000));
+        GenerateNewTask();
     }
 
     // takes commands from the player, parses them, and executes them, returning any relevant results
@@ -37,7 +62,14 @@ public class GameState : MonoBehaviour {
         if (args.Length == 0) return "";
         if (!commands.ContainsKey(args[0])) return $"Unrecognized command: '{args[0]}' Type 'help' for a list of commands.";
         // return the value that is returned by the command, and pass in any arguments
-        return commands[args[0]].Run(args);
+        string result = commands[args[0]].Run(args);
+
+        for(int i = tasks.Count - 1; i >= 0; i--) {
+            if(tasks[i].IsViolated()) return "YOU FAILED!";
+            if(tasks[i].IsSatisfied()) tasks.RemoveAt(i);
+        }
+
+        return result;
     }
 
     public static void ClearUserTerminal() {

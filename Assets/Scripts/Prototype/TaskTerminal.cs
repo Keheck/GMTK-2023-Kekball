@@ -12,6 +12,10 @@ public class TaskTerminal : MonoBehaviour {
     }
 
     void Update() {
-        textField.text = $"{Time.time}";
+        textField.text = "Tasks:\n";
+
+        foreach(Task task in GameState.tasks) {
+            textField.text += $"* {task.GetDescription()}\n";
+        }
     }
 }
