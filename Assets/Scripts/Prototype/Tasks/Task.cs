@@ -1,11 +1,12 @@
 public abstract class Task {
-    public int TimeSinceSent = 0;
-    public int TimeLimit = 0;
+    public float timeSinceSent = 0;
+    public float timeLimit = 0;
     public Player targetPlayer = null;
+    public bool expired = false;
 
     public Task(int timeSinceSent, int timeLimit) {
-        TimeSinceSent = timeSinceSent;
-        TimeLimit = timeLimit;
+        this.timeSinceSent = timeSinceSent;
+        this.timeLimit = timeLimit;
     }
 
     public abstract string GetDescription();

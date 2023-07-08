@@ -12,10 +12,10 @@ public class TaskTerminal : MonoBehaviour {
     }
 
     void Update() {
-        textField.text = "Tasks:\n";
+        textField.text = $"Player Satisfaction: {GameState.score}\nTasks:";
 
         foreach(Task task in GameState.tasks) {
-            textField.text += $"* {task.GetDescription()}\n";
+            textField.text += $"\n* {task.GetDescription()} {(int)task.timeSinceSent}/{(int)task.timeLimit}ms";
         }
     }
 }

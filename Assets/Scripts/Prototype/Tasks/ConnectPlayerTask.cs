@@ -5,7 +5,7 @@ public class ConnectPlayerTask: Task {
     }
 
     public override string GetDescription() {
-        return $"Connect player {targetPlayer.name} (id: {targetPlayer.id})";
+        return $"Connect player: {targetPlayer.name}";
     }
 
     public override bool IsSatisfied() {

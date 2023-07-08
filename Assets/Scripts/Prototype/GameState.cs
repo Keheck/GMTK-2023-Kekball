@@ -15,6 +15,8 @@ public class GameState : MonoBehaviour {
     static int playerId = 0;
     static int taskFrequency = 900;
 
+    public static int score = 100;
+
     private void Awake() {
         if (STATE is null) STATE = this;
         else Destroy(this);
@@ -38,6 +40,17 @@ public class GameState : MonoBehaviour {
         GenerateTasks();
     }
 
+    private void Update() {
+        foreach (Task task in tasks) {
+            task.timeSinceSent += Time.deltaTime;
+            if (task.timeSinceSent >= task.timeLimit) {
+                task.expired = true;
+                score -= (int)task.timeLimit;
+                tasks.Remove(task);
+            }
+        }
+    }
+
     async void GenerateTasks() {
         // 0: Connect player
         // 1: Disconect player (Destroy them)
@@ -48,7 +61,7 @@ public class GameState : MonoBehaviour {
         switch (taskType) {
             case 0:
                 // dont connect too many players
-                if (players.Count + connectingPlayers.Count >= 6) goto newTask;
+                if (players.Count >= 8) goto newTask;
                 // pick a new name for our new connecting player
                 int index = Mathf.FloorToInt(Random.value * Player.PLAYER_NAMES.Count);
                 string name = Player.PLAYER_NAMES[index];
@@ -60,7 +73,7 @@ public class GameState : MonoBehaviour {
                     if (plr.name == name) goto newTask;
                 }
                 Player requester = new Player(playerId++, Player.PLAYER_NAMES[index], 50);
-                tasks.Add(new ConnectPlayerTask((int)Random.Range(0, 30), 100, requester));
+                tasks.Add(new ConnectPlayerTask((int)Random.Range(25, 30), Random.Range(35,40), requester));
                 connectingPlayers.Add(requester);
                 break;
             case 1:
@@ -85,7 +98,7 @@ public class GameState : MonoBehaviour {
                 foreach (Task task in tasks) {
                     if (task.targetPlayer == player) goto newTask;
                 }
-                tasks.Add(new DamagePlayerTask((int)Random.Range(0,20), 70, player, (int)Random.Range(1,110)));
+                tasks.Add(new DamagePlayerTask((int)Random.Range(15,25), Random.Range(30,35), player, (int)Random.Range(1,110)));
                 break;
             case 9999: // never called
                 if (players.Count < 2) goto newTask;
@@ -96,7 +109,7 @@ public class GameState : MonoBehaviour {
                     if (task.targetPlayer == player2) goto newTask;
                 }
                 // note: probability of getting here is lower than other tasks, since we need two people
-                tasks.Add(new SetScoreTask((int) Random.Range(0, 20), 90, player2, player2.score + (int)Random.Range(1, 3)));
+                tasks.Add(new SetScoreTask((int) Random.Range(15, 25), Random.Range(30,40), player2, player2.score + (int)Random.Range(1, 3)));
                 break;
             default:
                 goto newTask;
@@ -121,12 +134,14 @@ public class GameState : MonoBehaviour {
         for (int i = tasks.Count - 1; i >= 0; i--) {
             if (tasks[i].IsViolated()) {
                 AudioManager.PlaySound(STATE.failTask);
+                score -= (int)tasks[i].timeLimit;
                 result += "\nTask Failed Successfully.";
                 tasks.RemoveAt(i);
                 taskFrequency -= 30;
             }
             else if (tasks[i].IsSatisfied()) {
                 AudioManager.PlaySound(STATE.winTask);
+                score += (int)tasks[i].timeLimit - (int)tasks[i].timeSinceSent;
                 tasks.RemoveAt(i);
                 taskFrequency -= 30;
             }
