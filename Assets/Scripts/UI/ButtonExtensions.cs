@@ -7,8 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
-{
+public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
     private TMP_Text tmpTextField;
     public AudioClip hover;
     public AudioClip click;
@@ -32,6 +31,10 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
     void Awake() {
         tmpTextField = GetComponentInChildren<TMP_Text>();
         this.text = this.tmpTextField.text;
+    }
+
+    private void Start() {
+        GetComponent<Button>().onClick.AddListener(() => AudioManager.PlaySound(click));
     }
 
     public void StartGame() {

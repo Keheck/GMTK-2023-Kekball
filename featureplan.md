@@ -47,3 +47,8 @@ put a difficulty on each one, for how late in the game they should be introduced
 - "player has been shot for 20 damage" (easy)
 - "player has been shot with a level 2 slug" (medium)
 - Perhaps periodically ping every player in the lobby? Provide the player a list ordered by last pinged
+
+doeball list for tonight
+BUILD
+music?
+credits

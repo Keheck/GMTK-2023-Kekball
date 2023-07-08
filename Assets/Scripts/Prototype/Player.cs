@@ -50,6 +50,10 @@ public class Player {
         "facebookman",
         "sneaks",
         "wirtual",
+        "lalondew",
+        "shadowblade",
+        "ghostdragon",
+        "trashgoblin",
         "popbob"
     };
 

@@ -124,7 +124,8 @@ public class GameState : MonoBehaviour {
         }
         AudioManager.PlaySound(STATE.newTask);
         await UniTask.WaitUntil(() => tasks.Count < 7);
-        await UniTask.Delay((int)Random.Range(0, 1200) + 400 + tasks.Count * taskFrequency);
+        int delay = Random.Range(0, 1200) + 400 + tasks.Count * taskFrequency;
+        await UniTask.Delay(delay > 0 ? delay : 0);
         goto newTask;
     }
 
