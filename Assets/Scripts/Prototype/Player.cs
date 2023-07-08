@@ -1,13 +1,16 @@
 public class Player {
-    public int ID;
-    public string Name;
-    public int Health;
-    public int Ping;
+    public int id;
+    public string name;
+    public int health;
+    public int ping;
+    public int score;
 
-    public Player(int ID, string Name, int Health, int Ping) {
-        this.ID = ID;
-        this.Name = Name;
-        this.Health = Health;
-        this.Ping = Ping;
+    public Player(int id, string name, int ping) {
+        this.id = id;
+        this.name = name;
+        this.ping = ping;
+        this.health = 100;
+        this.score = 0;
     }
+
 }
