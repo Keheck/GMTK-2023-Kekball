@@ -7,6 +7,8 @@ using Cysharp.Threading.Tasks;
 
 public class Terminal : MonoBehaviour {
 
+    [SerializeField] AudioClip typingSound;
+
     TMP_InputField inputField;
     int lastInputPostition = 0;
 
@@ -52,5 +54,9 @@ public class Terminal : MonoBehaviour {
         inputField.text = ">";
         inputField.caretPosition = 1;
         lastInputPostition = inputField.text.Length;
+    }
+
+    public void PlayTypingSound() {
+        AudioManager.PlaySound(typingSound);
     }
 }
