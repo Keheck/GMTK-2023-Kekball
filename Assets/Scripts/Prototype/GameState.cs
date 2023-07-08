@@ -4,12 +4,15 @@ using Cysharp.Threading.Tasks;
 
 public class GameState : MonoBehaviour {
 
+
     public static GameState STATE { get; private set; } // singleton instance?
 
     public static List<Player> players;
     public static List<Player> connectingPlayers;
     public static List<Task> tasks;
     public static Dictionary<string, ICommand> commands;
+
+    public AudioClip newTask, failTask, winTask;
 
     private void Awake() {
         if (STATE is null) STATE = this;
@@ -51,6 +54,8 @@ public class GameState : MonoBehaviour {
                     Player requester = new Player(9, Player.PLAYER_NAMES[index], 50);
                     break;
             }
+            // task was created
+            AudioManager.PlaySound(STATE.newTask);
     
             // Recursively call with a 1-4 second delay to generate new tasks
             await UniTask.Delay(Mathf.FloorToInt(Random.value * 3000 + 1000));
@@ -66,8 +71,14 @@ public class GameState : MonoBehaviour {
         string result = commands[args[0]].Run(args);
 
         for(int i = tasks.Count - 1; i >= 0; i--) {
-            if(tasks[i].IsViolated()) return "YOU FAILED!";
-            if(tasks[i].IsSatisfied()) tasks.RemoveAt(i);
+            if(tasks[i].IsViolated()) {
+                AudioManager.PlaySound(STATE.failTask);
+                return "YOU FAILED!";
+            }
+            if(tasks[i].IsSatisfied()) {
+                AudioManager.PlaySound(STATE.winTask);
+                tasks.RemoveAt(i);
+            }
         }
 
         return result;
