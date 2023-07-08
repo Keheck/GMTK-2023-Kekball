@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class ChatPlayer : MonoBehaviour
 {
@@ -64,5 +65,9 @@ public class ChatPlayer : MonoBehaviour
             tmpText.color = c;
             await UniTask.Delay(delayBetweenFade);
         }
+
+        await UniTask.Delay(500);
+
+        SceneManager.LoadScene("PrototypeGameserverGame");
     }
 }

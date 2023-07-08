@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Linq;
@@ -9,7 +10,6 @@ using System.Linq;
 public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     private TMP_Text tmpTextField;
-
     public AudioClip hover;
     public AudioClip click;
 
@@ -32,6 +32,10 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
     void Awake() {
         tmpTextField = GetComponentInChildren<TMP_Text>();
         this.text = this.tmpTextField.text;
+    }
+
+    public void StartGame() {
+        SceneManager.LoadScene("Lore");
     }
 
     public void SwitchNavigation(MenuSection menu) {
