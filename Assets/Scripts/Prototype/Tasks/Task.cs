@@ -5,8 +5,8 @@ public abstract class Task {
     public bool expired = false;
 
     public Task(int timeSinceSent, int timeLimit) {
-        this.timeSinceSent = timeSinceSent;
-        this.timeLimit = timeLimit;
+        this.timeSinceSent = timeSinceSent * 1.35f;
+        this.timeLimit = timeLimit * 1.35f;
     }
 
     public abstract string GetDescription();

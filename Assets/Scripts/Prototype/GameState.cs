@@ -46,10 +46,15 @@ public class GameState : MonoBehaviour {
             Task task = tasks[i];
             task.timeSinceSent += Time.deltaTime;
             if (task.timeSinceSent >= task.timeLimit) {
+                if (task is ConnectPlayerTask) {
+                    ConnectPlayerTask connectTask = (ConnectPlayerTask)task;
+                    connectingPlayers.Remove(connectTask.targetPlayer);
+                }
                 task.expired = true;
                 score -= (int)task.timeLimit;
                 tasks.Remove(task);
                 taskFrequency -= 30;
+                ErrorSound();
             }
         }
     }
