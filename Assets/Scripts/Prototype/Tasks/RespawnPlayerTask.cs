@@ -1,5 +1,4 @@
-class RespawnPlayerTask : Task
-{
+class RespawnPlayerTask : Task {
     public Player player;
 
     public RespawnPlayerTask(int timeSinceSent, int timeLimit, Player player) : base(timeSinceSent, timeLimit) {
@@ -11,7 +10,7 @@ class RespawnPlayerTask : Task
     }
 
     public override bool IsSatisfied() {
-        return GameState.players.Contains(player);
+        return player.isAlive;
     }
 
     public override bool IsViolated() {

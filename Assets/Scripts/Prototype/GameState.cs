@@ -29,6 +29,8 @@ public class GameState : MonoBehaviour {
         commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
         commands.Add("damage", new DamageCommand());
         commands.Add("setscore", new SetScoreCommand());
+        commands.Add("disconnect", new DisconnectCommand());
+        commands.Add("respawn", new RespawnCommand());
     }
 
     void Start() {
@@ -36,7 +38,7 @@ public class GameState : MonoBehaviour {
     }
 
     async void GenerateTasks() {
-        while(true) {
+        while (true) {
             // 0: Connect placer
             // 1: Disconect player (Destroy them)
             // 2: Move player
@@ -75,7 +77,7 @@ public class GameState : MonoBehaviour {
                             if (damageTask.destinationPlayer == players[index1]) goto newTask;
                         }
                     }
-                    tasks.Add(new DamagePlayerTask((int)(Random.value * 20) + 1, 70, players[index1], Mathf.FloorToInt(Random.value * 20)));
+                    tasks.Add(new DamagePlayerTask((int)(Random.value * 110) + 1, 70, players[index1], Mathf.FloorToInt(Random.value * 20)));
                     break;
                 default:
                     goto newTask;
@@ -95,12 +97,14 @@ public class GameState : MonoBehaviour {
         // return the value that is returned by the command, and pass in any arguments
         string result = commands[args[0]].Run(args);
 
-        for(int i = tasks.Count - 1; i >= 0; i--) {
-            if(tasks[i].IsViolated()) {
+        // check each task for completion
+        for (int i = tasks.Count - 1; i >= 0; i--) {
+            if (tasks[i].IsViolated()) {
                 AudioManager.PlaySound(STATE.failTask);
-                return "YOU FAILED!";
+                result += "\nYOU FAILED!";
+                tasks.RemoveAt(i);
             }
-            if(tasks[i].IsSatisfied()) {
+            else if (tasks[i].IsSatisfied()) {
                 AudioManager.PlaySound(STATE.winTask);
                 tasks.RemoveAt(i);
             }
