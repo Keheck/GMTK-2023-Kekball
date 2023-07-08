@@ -36,24 +36,25 @@ public class GameState : MonoBehaviour {
     }
 
     public static async void GenerateNewTask() {
-        // 0: Connect placer
-        // 1: Disconect player (Destroy them)
-        // 2: Move player
-        // 3: Damage player
-        // 4: Player killed -> change score
-        int taskType = Mathf.FloorToInt(Random.value * 5);
-
-        switch (taskType) {
-            case 0:
-                if(connectingPlayers.Count == 0) { GenerateNewTask(); return; }
-                int index = Mathf.FloorToInt(Random.value * Player.PLAYER_NAMES.Count);
-                Player requester = new Player(9, Player.PLAYER_NAMES[index], 50);
-                break;
+        while (true) {
+            // 0: Connect placer
+            // 1: Disconect player (Destroy them)
+            // 2: Move player
+            // 3: Damage player
+            // 4: Player killed -> change score
+            newTask: int taskType = Mathf.FloorToInt(Random.value * 5);
+    
+            switch (taskType) {
+                case 0:
+                    if(connectingPlayers.Count == 0) goto newTask; 
+                    int index = Mathf.FloorToInt(Random.value * Player.PLAYER_NAMES.Count);
+                    Player requester = new Player(9, Player.PLAYER_NAMES[index], 50);
+                    break;
+            }
+    
+            // Recursively call with a 1-4 second delay to generate new tasks
+            await UniTask.Delay(Mathf.FloorToInt(Random.value * 3000 + 1000));
         }
-
-        // Recursively call with a 1-4 second delay to generate new tasks
-        await UniTask.Delay(Mathf.FloorToInt(Random.value * 3000 + 1000));
-        GenerateNewTask();
     }
 
     // takes commands from the player, parses them, and executes them, returning any relevant results
