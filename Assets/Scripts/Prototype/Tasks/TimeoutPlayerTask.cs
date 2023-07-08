@@ -7,7 +7,7 @@ public class TimeoutPlayerTask : Task
     }
 
     public override string GetDescription() {
-        return $"{player.name} timed out";
+        return $"{player.name} timed out. Disconnect {player.name}.";
     }
 
     public override bool IsSatisfied() {

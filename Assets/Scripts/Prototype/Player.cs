@@ -6,6 +6,7 @@ public class Player {
     public int health;
     public int ping;
     public int score;
+    public bool timedOut = false;
 
     public Player(int id, string name, int ping) {
         this.id = id;
