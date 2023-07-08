@@ -47,6 +47,7 @@ public class GameState : MonoBehaviour {
                 task.expired = true;
                 score -= (int)task.timeLimit;
                 tasks.Remove(task);
+                taskFrequency -= 30;
             }
         }
     }
