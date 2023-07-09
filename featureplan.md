@@ -59,5 +59,5 @@ your highest point in the game you just lost
 doeball now
 fix volume
 build
-balance
-glow text
+~~balance~~
+~~glow text~~
