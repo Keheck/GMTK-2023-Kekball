@@ -15,7 +15,7 @@ public class TaskTerminal : MonoBehaviour {
         textField.text = $"Player Satisfaction: {GameState.score}\nTasks:";
 
         foreach(Task task in GameState.tasks) {
-            textField.text += $"\n* {task.GetDescription()} {(int)task.timeSinceSent}/{(int)task.timeLimit}ms";
-        }
+            textField.text += $"\n* {task.GetDescription()}";
+            if (task.showTime) textField.text += $" {(int)task.timeSinceSent}/{(int)task.timeLimit}ms";        }
     }
 }

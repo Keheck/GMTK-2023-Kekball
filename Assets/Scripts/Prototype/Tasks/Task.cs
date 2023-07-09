@@ -3,6 +3,7 @@ public abstract class Task {
     public float timeLimit = 0;
     public Player targetPlayer = null;
     public bool expired = false;
+    public bool showTime = true;
 
     public Task(int timeSinceSent, int timeLimit) {
         this.timeSinceSent = timeSinceSent;

@@ -4,6 +4,7 @@ public class MessageTask: Task {
 
     public MessageTask(string m): base(0,0) {
         message = m;
+        showTime = false;
     }
 
     public override string GetDescription() {

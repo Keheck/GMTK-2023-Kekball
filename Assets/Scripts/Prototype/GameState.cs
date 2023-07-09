@@ -18,6 +18,7 @@ public class GameState : MonoBehaviour {
     public static int score = 100;
     public static int highestScore = 100;
     public static float timeSurvived = 0;
+    public static bool generateTasks = true;
 
     private void Awake() {
         if (STATE is null) STATE = this;
@@ -31,7 +32,7 @@ public class GameState : MonoBehaviour {
         commands.Add("help", new HelpCommand());
         commands.Add("cls", new ClearCommand());
         commands.Add("connect", new ConnectCommand()); // for when a new client requests connection
-        commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
+        //commands.Add("lookup", new LookupCommand()); // for when a new client requests connection
         commands.Add("damage", new DamageCommand());
         commands.Add("setscore", new SetScoreCommand());
         commands.Add("disconnect", new DisconnectCommand());
@@ -70,6 +71,8 @@ public class GameState : MonoBehaviour {
             await UniTask.Yield();
         }
         // game is over
+        generateTasks = false;
+        tasks.Clear();
         tasks.Add(new MessageTask("GAME OVER"));
         tasks.Add(new MessageTask($"Highest Satisfaction: {highestScore}"));
         tasks.Add(new MessageTask($"Time Survived: {timeSurvived}"));
@@ -148,7 +151,7 @@ public class GameState : MonoBehaviour {
         await UniTask.WaitUntil(() => tasks.Count < 7);
         int delay = Random.Range(0, 1200) + 400 + tasks.Count * taskFrequency;
         await UniTask.Delay(delay > 0 ? delay : 0);
-        goto newTask;
+        if (generateTasks) goto newTask;
     }
 
     // takes commands from the player, parses them, and executes them, returning any relevant results
