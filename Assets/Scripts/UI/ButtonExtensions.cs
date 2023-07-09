@@ -63,6 +63,7 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
         GameState.thisRunHigh = 100;
         GameState.score = 100;
         GameState.timeSurvived = 0;
+        GameState.difficulty = 0;
 
         TMP_Text[] gameTexts = instance.gamePanel.GetComponentsInChildren<TMP_Text>();
 
