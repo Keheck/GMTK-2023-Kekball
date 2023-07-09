@@ -59,6 +59,7 @@ your highest point in the game you just lost
 doeball now
 ~~fix volume~~
 build
+set selection to nothing every frame
 ~~balance~~
 ~~glow text~~
 flicker?
