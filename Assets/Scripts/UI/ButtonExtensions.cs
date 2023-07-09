@@ -41,6 +41,21 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
         SceneManager.LoadScene("Lore");
     }
 
+    private void ResetGameManager() {
+        GameState.ClearUserTerminal();
+        GameState.connectingPlayers.Clear();
+        GameState.players.Clear();
+        GameState.tasks.Clear();
+        GameState.generateTasks = true;
+        // Don't reset score
+        //GameState.highestScore = 100;
+        GameState.thisRunHigh = 100;
+        GameState.score = 100;
+        GameState.timeSurvived = 0;
+        GameState.difficulty = 0;
+        GameState.tasksCompleted = 0;
+    }
+
     // Reset the entire scene manually and set the GameState's variables to default. Super scuffed but it works
     public void RetryGame() {
         GameState instance = GameState.STATE;
@@ -54,18 +69,8 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
         instance.gamePanel.SetActive(true);
         instance.losePanel.SetActive(false);
-        GameState.ClearUserTerminal();
-        GameState.connectingPlayers.Clear();
-        GameState.players.Clear();
-        GameState.tasks.Clear();
-        GameState.generateTasks = true;
-        // Don't reset score
-        //GameState.highestScore = 100;
-        GameState.thisRunHigh = 100;
-        GameState.score = 100;
-        GameState.timeSurvived = 0;
-        GameState.difficulty = 0;
-        GameState.tasksCompleted = 0;
+        
+        ResetGameManager();
 
         TMP_Text[] gameTexts = instance.gamePanel.GetComponentsInChildren<TMP_Text>();
 
@@ -89,6 +94,7 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
     }
 
     public void GotoMainMenu() {
+        ResetGameManager();
         SceneManager.LoadScene("MenuScreen");
     }
 
