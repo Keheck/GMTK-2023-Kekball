@@ -88,6 +88,10 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
         GetComponentInParent<MenuSection>().gameObject.SetActive(false);
     }
 
+    public void GotoMainMenu() {
+        SceneManager.LoadScene("MenuScreen");
+    }
+
     public void CloseGame() {
         Application.Quit();
     }
