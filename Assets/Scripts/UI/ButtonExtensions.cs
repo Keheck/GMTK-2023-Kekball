@@ -41,6 +41,42 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
         SceneManager.LoadScene("Lore");
     }
 
+    public void RetryGame() {
+        GameState instance = GameState.STATE;
+        
+        TMP_Text[] loseTexts = instance.losePanel.GetComponentsInChildren<TMP_Text>();
+
+        foreach(TMP_Text loseText in loseTexts) {
+            Color c = loseText.color;
+            c.a = 0f;
+            loseText.color = c;
+        }
+        instance.gamePanel.SetActive(true);
+        instance.losePanel.SetActive(false);
+        GameState.ClearUserTerminal();
+        GameState.connectingPlayers.Clear();
+        GameState.players.Clear();
+        GameState.tasks.Clear();
+        GameState.generateTasks = true;
+        // Don't reset score
+        //GameState.highestScore = 100;
+        GameState.thisRunHigh = 100;
+        GameState.score = 100;
+        GameState.timeSurvived = 0;
+
+        TMP_Text[] gameTexts = instance.gamePanel.GetComponentsInChildren<TMP_Text>();
+
+        foreach(TMP_Text gameText in gameTexts) {
+            Color c = gameText.color;
+            c.a = 1f;
+            gameText.color = c;
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        instance.CheckScores();
+    }
+
     public void SwitchNavigation(MenuSection menu) {
         // This is so fucking stupid
         menu.gameObject.SetActive(true);

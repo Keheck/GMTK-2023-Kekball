@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using TMPro;
 
 public class GameState : MonoBehaviour {
 
@@ -12,18 +13,22 @@ public class GameState : MonoBehaviour {
     public static Dictionary<string, ICommand> commands;
 
     public AudioClip newTask, failTask, winTask, unknownCommand;
-    static int playerId = 0;
-    static int taskFrequency = 900;
+    public static int playerId = 0;
+    public static int taskFrequency = 900;
 
     public static int score = 100;
     public static int highestScore = 100;
+    public static int thisRunHigh = 100;
     public static float timeSurvived = 0;
     public static bool generateTasks = true;
+
+    public GameObject gamePanel;
+    public GameObject losePanel;
 
     private void Awake() {
         if (STATE is null) STATE = this;
         else Destroy(this);
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
 
         players = new List<Player>();
         connectingPlayers = new List<Player>(); // connecting players will be added to the players list if connected 
@@ -44,11 +49,11 @@ public class GameState : MonoBehaviour {
         CheckScores();
     }
 
-    async void CheckScores() {
-
+    public async void CheckScores() {
+        // UniTask setScoreTask = SetScoreToZero();
         while (score > 0) {
             // update scores
-            if (score > highestScore) highestScore = score;
+            if (score > thisRunHigh) thisRunHigh = score;
             timeSurvived += Time.deltaTime;
             // update tasks
             for (int i = tasks.Count-1; i >= 0; i--) {
@@ -70,18 +75,46 @@ public class GameState : MonoBehaviour {
             }
             await UniTask.Yield();
         }
-        // game is over
+        
+        // await setScoreTask;
+        if(thisRunHigh > highestScore) highestScore = thisRunHigh;
         generateTasks = false;
-        tasks.Clear();
-        tasks.Add(new MessageTask("GAME OVER"));
-        tasks.Add(new MessageTask($"Highest Satisfaction: {highestScore}"));
-        tasks.Add(new MessageTask($"Time Survived: {timeSurvived}"));
-        tasks.Add(new MessageTask($"Type 'exit' to quit."));
-        tasks.Add(new MessageTask($"Type 'retry' to restart."));
-        commands.Add("exit", new QuitCommand());
-        commands.Add("retry", new RetryCommand());
 
+        losePanel.SetActive(true);
+        TMP_Text stats = GameObject.Find("LoseStats").GetComponent<TMP_Text>();
+        stats.text = $"Highest Player Satisfaction: {highestScore}\nThis Run's High: {thisRunHigh}\nServer Uptime:{timeSurvived}";
+
+        TMP_Text[] gameTexts = gamePanel.GetComponentsInChildren<TMP_Text>();
+        TMP_Text[] loseTexts = losePanel.GetComponentsInChildren<TMP_Text>();
+
+        foreach(TMP_Text loseText in loseTexts) {
+            Color c = loseText.color;
+            c.a = 0f;
+            loseText.color = c;
+        }
+
+        while(gameTexts[0].color.a > 0f) {
+            foreach(TMP_Text gameText in gameTexts) {
+                Color c = gameText.color;
+                c.a -= 0.03f;
+                gameText.color = c;
+            }
+
+            foreach(TMP_Text loseText in loseTexts) {
+                Color c = loseText.color;
+                c.a += 0.03f;
+                loseText.color = c;
+            }
+
+            await UniTask.Delay(10);
+        }
+
+        gamePanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
+
+    async UniTask SetScoreToZero() { await UniTask.Delay(100); score = 0; }
 
     async void GenerateTasks() {
         await UniTask.Delay(8000);
