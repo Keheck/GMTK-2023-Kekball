@@ -251,10 +251,10 @@ RectTransform:
   m_Father: {fileID: 288882082}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 455, y: -214}
-  m_SizeDelta: {x: -814, y: -402}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -51.789978, y: 18.690002}
+  m_SizeDelta: {x: 112.38782, y: 37.37549}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &187930170
 MonoBehaviour:
@@ -412,10 +412,10 @@ RectTransform:
   m_Father: {fileID: 1026756378}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 455, y: -214}
-  m_SizeDelta: {x: -822, y: -402}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -61.092834, y: 19.348495}
+  m_SizeDelta: {x: 122.18048, y: 38.70349}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &274213931
 MonoBehaviour:
@@ -1348,9 +1348,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ">A game about a game, but you dont play the game.\n>Created in the 2023
+  m_text: ">A game about a game, but you dont play the game.\n>Created for the 2023
     GMTK 48 hour game jam by \n>Doeball and Keheck.\n>Game jam theme: roles reversed.\n>Sound
-    effects created with sfxr.me.\n>Song \"Hackers\" by Karl Casey @ White Bat Audio\n\n"
+    effects created with sfxr.me.\n>Song \"Kek\" by Vixxi\n>Song \"Hackers\" by Karl
+    Casey @ White Bat Audio"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05cc6f451b6cbc64386906e2fa953692, type: 2}
   m_sharedMaterial: {fileID: -764687578957900200, guid: 05cc6f451b6cbc64386906e2fa953692, type: 2}
@@ -1858,6 +1859,71 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200438210}
   m_CullTransparentMesh: 1
+--- !u!1001 &1281343301
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 87479457459073153, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: music
+      value: 
+      objectReference: {fileID: 8300000, guid: f5e45e34aa7de244c9cceff83b5acd51, type: 3}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 568.48486
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 253.5613
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.431227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534207991472478829, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_Name
+      value: thing that tells the audiomanager to start playing music
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
 --- !u!1 &1294414034
 GameObject:
   m_ObjectHideFlags: 0
@@ -2195,7 +2261,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.15
+  m_fontSize: 27.7
   m_fontSizeBase: 25.96
   m_fontWeight: 400
   m_enableAutoSizing: 1

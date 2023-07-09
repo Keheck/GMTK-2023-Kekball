@@ -118,8 +118,8 @@ public class GameState : MonoBehaviour {
     public static int tasksAfterDifficultyIncrease = 0;
     public static int difficulty = 0;
     public static int difficultyLimit = 300;
-    async void GenerateTasks() {
-        await UniTask.Delay(8000);
+    public async void GenerateTasks() {
+        await UniTask.Delay(5000);
         // 0: Connect player
         // 1: Disconect player (Destroy them)
         // 2: Set player score
@@ -141,7 +141,7 @@ public class GameState : MonoBehaviour {
                     if (plr.name == name) goto newTask;
                 }
                 Player requester = new Player(playerId++, Player.PLAYER_NAMES[index], 50);
-                tasks.Add(new ConnectPlayerTask((int)Random.Range(25, 30), Random.Range(35,40), requester));
+                tasks.Add(new ConnectPlayerTask((int)Random.Range(25, 30), Random.Range(35,40) - difficulty/20, requester));
                 connectingPlayers.Add(requester);
                 break;
             case 1:
@@ -156,7 +156,7 @@ public class GameState : MonoBehaviour {
                 // found a player to time out, time them out
                 if (timedOutPlayer.timedOut) goto newTask;
                 timedOutPlayer.timedOut = true;
-                tasks.Add(new TimeoutPlayerTask(timedOutPlayer));
+                tasks.Add(new TimeoutPlayerTask(timedOutPlayer, (int)Random.Range(20, 25) - difficulty/30));
                 break;
             case 2:
                 if (players.Count < 5) goto newTask;
@@ -167,7 +167,7 @@ public class GameState : MonoBehaviour {
                     if (task.targetPlayer == player) goto newTask;
                 }
                 // note: probability of getting here is lower than other tasks, since we need two people
-                tasks.Add(new SetScoreTask((int) Random.Range(15, 25), Random.Range(30,40), player, player.score + (int)Random.Range(1, 3)));
+                tasks.Add(new SetScoreTask((int) Random.Range(15, 25), Random.Range(30,40) - difficulty/25, player, player.score + (int)Random.Range(1, 3)));
                 break;
             case 3:
                 if(players.Count < 3) goto newTask;
@@ -177,21 +177,22 @@ public class GameState : MonoBehaviour {
                 foreach (Task task in tasks) {
                     if (task.targetPlayer == player) goto newTask;
                 }
-                tasks.Add(new DamagePlayerTask((int)Random.Range(15,25), Random.Range(30,35), player, (int)Random.Range(1,110)));
+                tasks.Add(new DamagePlayerTask((int)Random.Range(15,25), ((byte)Random.Range(30,35) - difficulty/25), player, (int)Random.Range(1,110)));
                 break;
             default:
                 goto newTask;
         }
         tasksAfterDifficultyIncrease++;
 
-        if(tasksAfterDifficultyIncrease >= tasksPerDifficultyIncrease && difficultyLimit < 300) {
+        if(tasksAfterDifficultyIncrease >= tasksPerDifficultyIncrease && difficulty < difficultyLimit) {
             tasksAfterDifficultyIncrease = 0;
             difficulty += difficultyIncreaseAmount;
         }
 
         AudioManager.PlaySound(STATE.newTask);
         await UniTask.WaitUntil(() => tasks.Count < 7);
-        int delay = Random.Range(0, 1200 - difficulty) + 500 + tasks.Count * taskFrequency - difficulty;
+        int delay = Random.Range(0, 2000 - difficulty) + 200 + tasks.Count * taskFrequency - difficulty * 6 / 5;
+        Debug.Log(delay);
         await UniTask.Delay(delay > 0 ? delay : 0);
         if (generateTasks) goto newTask;
     }

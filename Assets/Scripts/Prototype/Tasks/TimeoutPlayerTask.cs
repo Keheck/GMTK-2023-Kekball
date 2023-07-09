@@ -1,8 +1,6 @@
-using UnityEngine;
-
 public class TimeoutPlayerTask : Task {
 
-    public TimeoutPlayerTask(Player player): base(0, Random.Range(10, 20)) {
+    public TimeoutPlayerTask(Player player, int timeLimit): base(0, timeLimit) {
         this.targetPlayer = player;
     }
 

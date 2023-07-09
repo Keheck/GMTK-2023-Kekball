@@ -41,6 +41,7 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
         SceneManager.LoadScene("Lore");
     }
 
+    // Reset the entire scene manually and set the GameState's variables to default. Super scuffed but it works
     public void RetryGame() {
         GameState instance = GameState.STATE;
         
@@ -76,6 +77,8 @@ public class ButtonExtensions : MonoBehaviour, IPointerEnterHandler, IPointerExi
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         instance.CheckScores();
+        instance.GenerateTasks();
+        GameObject.Find("Terminal").GetComponent<Terminal>().Reselect();
     }
 
     public void SwitchNavigation(MenuSection menu) {
