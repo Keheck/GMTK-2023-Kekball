@@ -374,7 +374,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 20}
   m_SizeDelta: {x: -17.361816, y: -10.0338745}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1305370194
@@ -390,10 +390,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chat: {fileID: 4900000, guid: 3cea4a7ac00b5a349be97e3f41e5e251, type: 3}
-  delayBetweenChars: 50
-  delayBetweenMessages: 1500
-  delayBetweenNameAndMessage: 250
-  waitToFade: 500
+  delayBetweenChars: 37
+  delayBetweenMessages: 1200
+  delayBetweenNameAndMessage: 350
+  waitToFade: 300
   delayBetweenFade: 15
   fadeAmount: 0.01
   typeSound: {fileID: 8300000, guid: 11512dffd6d8cbb46bdf3b74674d238c, type: 3}
@@ -445,8 +445,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35.4
-  m_fontSizeBase: 35.4
+  m_fontSize: 35.13
+  m_fontSizeBase: 35.13
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

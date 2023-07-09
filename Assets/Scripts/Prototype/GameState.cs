@@ -6,6 +6,7 @@ using TMPro;
 public class GameState : MonoBehaviour {
 
     public static GameState STATE { get; private set; } // singleton instance?
+    [SerializeField] AnimationCurve difficultyCurve;
 
     public static List<Player> players;
     public static List<Player> connectingPlayers;
@@ -118,6 +119,8 @@ public class GameState : MonoBehaviour {
     public static int tasksAfterDifficultyIncrease = 0;
     public static int difficulty = 0;
     public static int difficultyLimit = 300;
+    public static int tasksCompleted = 0;
+    
     public async void GenerateTasks() {
         await UniTask.Delay(5000);
         // 0: Connect player
@@ -191,8 +194,8 @@ public class GameState : MonoBehaviour {
 
         AudioManager.PlaySound(STATE.newTask);
         await UniTask.WaitUntil(() => tasks.Count < 7);
-        int delay = Random.Range(0, 2000 - difficulty) + 200 + tasks.Count * taskFrequency - difficulty * 6 / 5;
-        Debug.Log(delay);
+        //int delay = Random.Range(0, 2000 - difficulty) + 200 + tasks.Count * taskFrequency - difficulty * 6 / 5;
+        int delay = (int)(Random.Range(0, 1000) + difficultyCurve.Evaluate(tasksCompleted) * 800);
         await UniTask.Delay(delay > 0 ? delay : 0);
         if (generateTasks) goto newTask;
     }
@@ -217,6 +220,7 @@ public class GameState : MonoBehaviour {
                 taskFrequency -= 30;
             }
             else if (tasks[i].IsSatisfied()) {
+                tasksCompleted++;
                 AudioManager.PlaySound(STATE.winTask);
                 score += (int)tasks[i].timeLimit - (int)tasks[i].timeSinceSent;
                 tasks.RemoveAt(i);

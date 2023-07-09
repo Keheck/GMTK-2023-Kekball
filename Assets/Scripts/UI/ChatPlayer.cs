@@ -26,6 +26,15 @@ public class ChatPlayer : MonoBehaviour
         PlayMessage();
     }
 
+    private void Update() {
+        // speed up
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)) {
+            delayBetweenChars = (int)(delayBetweenChars * 0.8f);
+            delayBetweenMessages = (int)(delayBetweenMessages * 0.8f);
+            delayBetweenNameAndMessage = (int)(delayBetweenNameAndMessage * 0.8f);
+        }
+    }
+
     async void PlayMessage() {
         string text = chat.text;
         //0 = typing character name

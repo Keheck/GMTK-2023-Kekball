@@ -1230,6 +1230,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9bfa0d920fdcc7498bbbd56a3103b1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0010875196
+      value: 5.0019236
+      inSlope: -0.008025019
+      outSlope: -0.008025019
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.4315127
+    - serializedVersion: 3
+      time: 16.498444
+      value: 4.1150327
+      inSlope: -0.16438192
+      outSlope: -0.16438192
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.22800621
+      outWeight: 0.29015836
+    - serializedVersion: 3
+      time: 27.877676
+      value: 1.0979512
+      inSlope: -0.360773
+      outSlope: -0.360773
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.82364947
+    - serializedVersion: 3
+      time: 31.4123
+      value: 0.4182001
+      inSlope: 0.0013999286
+      outSlope: 0.0013999286
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   newTask: {fileID: 8300000, guid: 5d3158ba1fa1ac64894512c26bea7c39, type: 3}
   failTask: {fileID: 8300000, guid: 58c492167c00dd741a023c5938c6a08d, type: 3}
   winTask: {fileID: 8300000, guid: 037535db813295844886e8f2632f4cd7, type: 3}
