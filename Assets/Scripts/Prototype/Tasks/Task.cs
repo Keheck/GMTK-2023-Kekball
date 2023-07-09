@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public abstract class Task {
     public float timeSinceSent = 0;
     public float timeLimit = 0;
@@ -6,7 +8,7 @@ public abstract class Task {
     public bool showTime = true;
 
     public Task(int timeSinceSent, int timeLimit) {
-        this.timeSinceSent = timeSinceSent;
+        this.timeSinceSent = timeSinceSent + Mathf.Min(GameState.tasksCompleted, 9);
         this.timeLimit = timeLimit * 1.95f;
     }
 

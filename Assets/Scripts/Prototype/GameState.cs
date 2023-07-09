@@ -82,7 +82,7 @@ public class GameState : MonoBehaviour {
 
         losePanel.SetActive(true);
         TMP_Text stats = GameObject.Find("LoseStats").GetComponent<TMP_Text>();
-        stats.text = $"Highest Player Satisfaction: {highestScore}\nThis Run's High: {thisRunHigh}\nServer Uptime:{timeSurvived}";
+        stats.text = $"Highest Player Satisfaction: {highestScore}\nThis Run's High: {thisRunHigh}\nServer Uptime: {(int)timeSurvived}ms";
 
         TMP_Text[] gameTexts = gamePanel.GetComponentsInChildren<TMP_Text>();
         TMP_Text[] loseTexts = losePanel.GetComponentsInChildren<TMP_Text>();
