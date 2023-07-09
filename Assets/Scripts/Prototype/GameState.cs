@@ -16,6 +16,8 @@ public class GameState : MonoBehaviour {
     static int taskFrequency = 900;
 
     public static int score = 100;
+    public static int highestScore = 100;
+    public static float timeSurvived = 0;
 
     private void Awake() {
         if (STATE is null) STATE = this;
@@ -38,28 +40,48 @@ public class GameState : MonoBehaviour {
 
     void Start() {
         GenerateTasks();
+        CheckScores();
     }
 
-    private void Update() {
+    async void CheckScores() {
 
-        for (int i = tasks.Count-1; i >= 0; i--) {
-            Task task = tasks[i];
-            task.timeSinceSent += Time.deltaTime;
-            if (task.timeSinceSent >= task.timeLimit) {
-                if (task is ConnectPlayerTask) {
-                    ConnectPlayerTask connectTask = (ConnectPlayerTask)task;
-                    connectingPlayers.Remove(connectTask.targetPlayer);
+        while (score > 0) {
+            // update scores
+            if (score > highestScore) highestScore = score;
+            timeSurvived += Time.deltaTime;
+            // update tasks
+            for (int i = tasks.Count-1; i >= 0; i--) {
+                Task task = tasks[i];
+                task.timeSinceSent += Time.deltaTime;
+                if (task.timeSinceSent >= task.timeLimit) {
+                    // task failed
+                    if (task is ConnectPlayerTask) {
+                        // refuse connection
+                        ConnectPlayerTask connectTask = (ConnectPlayerTask)task;
+                        connectingPlayers.Remove(connectTask.targetPlayer);
+                    }
+                    // remove the task and incur a penalty
+                    task.expired = true;
+                    score -= (int)task.timeLimit;
+                    tasks.Remove(task);
+                    ErrorSound();
                 }
-                task.expired = true;
-                score -= (int)task.timeLimit;
-                tasks.Remove(task);
-                taskFrequency -= 30;
-                ErrorSound();
             }
+            await UniTask.Yield();
         }
+        // game is over
+        tasks.Add(new MessageTask("GAME OVER"));
+        tasks.Add(new MessageTask($"Highest Satisfaction: {highestScore}"));
+        tasks.Add(new MessageTask($"Time Survived: {timeSurvived}"));
+        tasks.Add(new MessageTask($"Type 'exit' to quit."));
+        tasks.Add(new MessageTask($"Type 'retry' to restart."));
+        commands.Add("exit", new QuitCommand());
+        commands.Add("retry", new RetryCommand());
+
     }
 
     async void GenerateTasks() {
+        await UniTask.Delay(8000);
         // 0: Connect player
         // 1: Disconect player (Destroy them)
         // 2: TODO Move player
@@ -98,8 +120,8 @@ public class GameState : MonoBehaviour {
                 timedOutPlayer.timedOut = true;
                 tasks.Add(new TimeoutPlayerTask(timedOutPlayer));
                 break;
-            case 2: // never called
-                if (players.Count < 2) goto newTask;
+            case 2:
+                if (players.Count < 5) goto newTask;
                 // get a new player
                 Player player2 = players[(int)Random.Range(0, players.Count - 1)];
                 // abort if we already have a task for this player
@@ -110,7 +132,7 @@ public class GameState : MonoBehaviour {
                 tasks.Add(new SetScoreTask((int) Random.Range(15, 25), Random.Range(30,40), player2, player2.score + (int)Random.Range(1, 3)));
                 break;
             case 3:
-                if(players.Count < 2) goto newTask;
+                if(players.Count < 3) goto newTask;
                 // get a new player
                 Player player = players[(int)Random.Range(0, players.Count - 1)];
                 // abort if we already have a task for this player

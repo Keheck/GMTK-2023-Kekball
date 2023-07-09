@@ -420,14 +420,14 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 05cc6f451b6cbc64386906e2fa953692, type: 2}
+  m_sharedMaterial: {fileID: -764687578957900200, guid: 05cc6f451b6cbc64386906e2fa953692, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4278251008
   m_fontColor: {r: 0, g: 0.9339623, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -445,8 +445,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 35.4
+  m_fontSizeBase: 35.4
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -587,3 +587,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2323672676888900187
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 568.48486
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 253.5613
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.431227
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4376457496891453076, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5534207991472478829, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}
+      propertyPath: m_Name
+      value: thing that tells the audiomanager to start playing music
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d2198fdcd3e67dc449a4d2ba595dd847, type: 3}

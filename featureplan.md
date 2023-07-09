@@ -50,5 +50,8 @@ put a difficulty on each one, for how late in the game they should be introduced
 
 doeball list for tonight
 BUILD
-music?
-credits
+~~music?~~
+~~credits~~
+
+then we need a retry menu, to either return to menu, or highlight the option to play again, and show the score from
+your highest point in the game you just lost

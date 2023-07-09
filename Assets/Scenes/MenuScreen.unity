@@ -1350,7 +1350,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: ">A game about a game, but you dont play the game.\n>Created in the 2023
     GMTK 48 hour game jam by \n>Doeball and Keheck.\n>Game jam theme: roles reversed.\n>Sound
-    effects created with sfxr.me.\n\n"
+    effects created with sfxr.me.\n>Song \"Hackers\" by Karl Casey @ White Bat Audio\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 05cc6f451b6cbc64386906e2fa953692, type: 2}
   m_sharedMaterial: {fileID: -764687578957900200, guid: 05cc6f451b6cbc64386906e2fa953692, type: 2}

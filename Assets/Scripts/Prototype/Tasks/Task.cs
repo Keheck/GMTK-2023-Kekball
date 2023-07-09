@@ -6,7 +6,7 @@ public abstract class Task {
 
     public Task(int timeSinceSent, int timeLimit) {
         this.timeSinceSent = timeSinceSent;
-        this.timeLimit = timeLimit * 1.7f;
+        this.timeLimit = timeLimit * 1.95f;
     }
 
     public abstract string GetDescription();
